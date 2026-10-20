@@ -1,4 +1,4 @@
-package io.github.polobernardoscarlos.fichaje.model;
+package io.github.polobernardoscarlos.fichaje.model.entity;
 
 import io.github.polobernardoscarlos.fichaje.model.enums.Rol;
 import jakarta.persistence.*;

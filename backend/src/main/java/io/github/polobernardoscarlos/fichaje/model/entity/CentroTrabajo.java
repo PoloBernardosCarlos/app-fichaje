@@ -1,4 +1,4 @@
-package io.github.polobernardoscarlos.fichaje.model;
+package io.github.polobernardoscarlos.fichaje.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,31 +6,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalTime;
-
 @Entity
-@Table(name="turnos")
+@Table(name = "centros_trabajo")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Turno {
+
+public class CentroTrabajo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(nullable = false, length = 50, unique = true)
+    @Column(nullable = false, length = 100)
     private String nombre;
 
     @Column(nullable = false)
-    private LocalTime horaInicio;
+    private Double latitud;
 
     @Column(nullable = false)
-    private LocalTime horaFin;
+    private Double longitud;
 
     @Column(nullable = false)
-    private int margenMinutos=15;
+    private int radioMetros=100;
 
-    @Column(nullable = false)
-    private boolean activo=true;
 }

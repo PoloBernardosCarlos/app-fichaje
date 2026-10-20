@@ -1,0 +1,26 @@
+# Java / Maven
+*.class
+*.log
+*.jar
+target/
+
+# Gradle / Android
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Secretos y configuración local
+.env
+*.env
+application-local.properties

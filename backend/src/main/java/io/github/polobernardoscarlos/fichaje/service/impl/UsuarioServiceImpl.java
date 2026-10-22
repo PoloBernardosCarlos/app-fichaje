@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -80,22 +79,59 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     }
 
+    @Transactional
     @Override
     public UsuarioResponse actualizarUsuario(UsuarioUpdateRequest usuarioRequest, Long id) {
-        return null;
+        //COmprobamos que existe usuario con este id
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("No se ha encontrado usuario con el id " + id));
+
+        //Comparamos el usuario encontrado con el request
+        usuario.setNombre(usuarioRequest.nombre());
+        usuario.setApellidos(usuarioRequest.apellidos());
+        //Si el dni cambia, comprobamos que no exista en la base y actualizamos
+        if (!usuario.getDni().equalsIgnoreCase(usuarioRequest.dni())) {
+            //SI ya existe un dni asi registrado excepcion
+            if (usuarioRepository.existsByDni(usuarioRequest.dni())) {
+                throw new ReglaNegocioException("El dni existe en el sistema" + usuarioRequest.dni());
+            } else {
+                usuario.setDni(usuarioRequest.dni());
+            }
+        }
+        //SI el email es diferente comprobamos que no exusta y actualizamos
+        if (!usuario.getEmail().equalsIgnoreCase(usuarioRequest.email())) {
+            if (usuarioRepository.existsByEmail(usuarioRequest.email())) {
+                throw new ReglaNegocioException("El email existe en el sistema" + usuarioRequest.email());
+            } else {
+                usuario.setEmail(usuarioRequest.email());
+
+            }
+        }
+        usuario.setTelefono(usuarioRequest.telefono());
+        //Comnprobamos si el cambio es de ADMIN a EMPLEADO, de ser asi comprobamos que como minimo siempre hay un admin
+        if (usuario.getRol() == Rol.ADMIN && usuarioRequest.rol() == Rol.EMPLEADO) {
+            if (usuarioRepository.countByRolAndActivoTrue(Rol.ADMIN) == 1) {
+                throw new ReglaNegocioException("No puede haber menos d eun administrador");
+            }
+
+
+        }
+        usuario.setRol(usuarioRequest.rol());
+
+        return toUsuarioResponse(usuarioRepository.save(usuario));
     }
 
     @Transactional
     @Override
     public void desactivarUsuario(Long id) {
-       Usuario usuario = usuarioRepository.findById(id).orElseThrow(()->  new RecursoNoEncontradoException("Usuario no encontrado"));
-       if((usuarioRepository.countByRolAndActivoTrue(Rol.ADMIN)==1)&&usuario.getRol().equals(Rol.ADMIN)){
-           throw new ReglaNegocioException("No se puede desactivar al ultimo administrador");
-       }else {
-           usuario.setActivo(false);
-           usuarioRepository.save(usuario);
-       }
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado"));
+        if ((usuarioRepository.countByRolAndActivoTrue(Rol.ADMIN) == 1) && usuario.getRol().equals(Rol.ADMIN)) {
+            throw new ReglaNegocioException("No se puede desactivar al ultimo administrador");
+        } else {
+            usuario.setActivo(false);
+            usuarioRepository.save(usuario);
+        }
     }
+
     @Transactional(readOnly = true)
     @Override
     public UsuarioResponse buscarPorId(Long id) {

@@ -135,9 +135,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional(readOnly = true)
     @Override
     public UsuarioResponse buscarPorId(Long id) {
-        UsuarioResponse usuarioResponse = toUsuarioResponse(usuarioRepository.findById(id).orElseThrow(() ->
+        return toUsuarioResponse(usuarioRepository.findById(id).orElseThrow(() ->
                 new RecursoNoEncontradoException("Usuario con id " + id + " no  se ha encontrado")));
-        return usuarioResponse;
+
 
     }
 

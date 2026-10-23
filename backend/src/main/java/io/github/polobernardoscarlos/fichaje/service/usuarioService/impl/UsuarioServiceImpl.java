@@ -1,4 +1,4 @@
-package io.github.polobernardoscarlos.fichaje.service.impl;
+package io.github.polobernardoscarlos.fichaje.service.usuarioService.impl;
 
 import io.github.polobernardoscarlos.fichaje.exception.RecursoNoEncontradoException;
 import io.github.polobernardoscarlos.fichaje.exception.ReglaNegocioException;
@@ -8,7 +8,7 @@ import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioUpdat
 import io.github.polobernardoscarlos.fichaje.model.entity.Usuario;
 import io.github.polobernardoscarlos.fichaje.model.enums.Rol;
 import io.github.polobernardoscarlos.fichaje.repository.UsuarioRepository;
-import io.github.polobernardoscarlos.fichaje.service.UsuarioService;
+import io.github.polobernardoscarlos.fichaje.service.usuarioService.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

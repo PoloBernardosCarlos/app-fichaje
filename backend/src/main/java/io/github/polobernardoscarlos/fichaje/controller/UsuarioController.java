@@ -3,7 +3,7 @@ package io.github.polobernardoscarlos.fichaje.controller;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioRequest;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioResponse;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioUpdateRequest;
-import io.github.polobernardoscarlos.fichaje.service.UsuarioService;
+import io.github.polobernardoscarlos.fichaje.service.usuarioService.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

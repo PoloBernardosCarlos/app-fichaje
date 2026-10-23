@@ -1,4 +1,4 @@
-package io.github.polobernardoscarlos.fichaje.service;
+package io.github.polobernardoscarlos.fichaje.service.usuarioService;
 
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioRequest;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioResponse;

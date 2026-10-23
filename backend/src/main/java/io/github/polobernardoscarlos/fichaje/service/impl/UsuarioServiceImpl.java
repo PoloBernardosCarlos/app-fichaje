@@ -2,9 +2,9 @@ package io.github.polobernardoscarlos.fichaje.service.impl;
 
 import io.github.polobernardoscarlos.fichaje.exception.RecursoNoEncontradoException;
 import io.github.polobernardoscarlos.fichaje.exception.ReglaNegocioException;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioRequest;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioResponse;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioUpdateRequest;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioRequest;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioResponse;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioUpdateRequest;
 import io.github.polobernardoscarlos.fichaje.model.entity.Usuario;
 import io.github.polobernardoscarlos.fichaje.model.enums.Rol;
 import io.github.polobernardoscarlos.fichaje.repository.UsuarioRepository;

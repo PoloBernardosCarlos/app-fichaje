@@ -1,8 +1,8 @@
 package io.github.polobernardoscarlos.fichaje.controller;
 
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioRequest;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioResponse;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioUpdateRequest;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioRequest;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioResponse;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioUpdateRequest;
 import io.github.polobernardoscarlos.fichaje.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package io.github.polobernardoscarlos.fichaje.model.dto;
+package io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs;
 
 import io.github.polobernardoscarlos.fichaje.model.enums.Rol;
 import jakarta.validation.constraints.*;

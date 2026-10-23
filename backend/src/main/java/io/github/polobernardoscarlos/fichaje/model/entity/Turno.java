@@ -32,5 +32,5 @@ public class Turno {
     private int margenMinutos=15;
 
     @Column(nullable = false)
-    private boolean activo=true;
+    private boolean activo=true;//Borrado logico
 }

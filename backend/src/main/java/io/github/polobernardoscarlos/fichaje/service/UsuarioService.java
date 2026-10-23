@@ -1,8 +1,8 @@
 package io.github.polobernardoscarlos.fichaje.service;
 
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioRequest;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioResponse;
-import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioUpdateRequest;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioRequest;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioResponse;
+import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioUpdateRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

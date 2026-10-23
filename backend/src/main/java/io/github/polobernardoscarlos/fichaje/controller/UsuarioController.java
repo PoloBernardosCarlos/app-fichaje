@@ -5,8 +5,6 @@ import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioResponse;
 import io.github.polobernardoscarlos.fichaje.model.dto.UsuarioUpdateRequest;
 import io.github.polobernardoscarlos.fichaje.service.UsuarioService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

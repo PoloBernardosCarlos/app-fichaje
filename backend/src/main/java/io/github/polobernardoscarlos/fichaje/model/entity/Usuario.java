@@ -15,10 +15,16 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "centro_trabajo_id")
+
+    private CentroTrabajo centroTrabajo;
 
     @Column(nullable = false, length = 50)
     private String nombre;

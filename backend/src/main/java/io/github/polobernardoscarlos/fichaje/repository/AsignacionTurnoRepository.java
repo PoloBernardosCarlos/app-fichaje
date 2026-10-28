@@ -14,7 +14,11 @@ public interface AsignacionTurnoRepository extends JpaRepository<AsignacionTurno
 
     boolean existsByUsuarioIdAndFecha(Long usuarioId, LocalDate fecha);
 
-    List<AsignacionTurno> findByUsuarioIdAndFechaBetween(Long usuario_id, LocalDate desde, LocalDate hasta);
+    List<AsignacionTurno> findByUsuarioDniAndFechaBetween(String usuarioDni, LocalDate desde, LocalDate hasta);
+    List<AsignacionTurno> findByUsuarioIdAndFechaBetween(Long usuarioId, LocalDate desde, LocalDate hasta);
 
 
+    List<AsignacionTurno> findByTurnoId(Long turnoId);
+
+    List<AsignacionTurno> findByTurnoNombre(String nombre);
 }

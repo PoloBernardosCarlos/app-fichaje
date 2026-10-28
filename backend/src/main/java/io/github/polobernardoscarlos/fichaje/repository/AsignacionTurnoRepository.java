@@ -17,5 +17,4 @@ public interface AsignacionTurnoRepository extends JpaRepository<AsignacionTurno
     List<AsignacionTurno> findByUsuarioIdAndFechaBetween(Long usuario_id, LocalDate desde, LocalDate hasta);
 
 
-
 }

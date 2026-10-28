@@ -5,8 +5,10 @@ import io.github.polobernardoscarlos.fichaje.exception.ReglaNegocioException;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioRequest;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioResponse;
 import io.github.polobernardoscarlos.fichaje.model.dto.usuariosDTOs.UsuarioUpdateRequest;
+import io.github.polobernardoscarlos.fichaje.model.entity.CentroTrabajo;
 import io.github.polobernardoscarlos.fichaje.model.entity.Usuario;
 import io.github.polobernardoscarlos.fichaje.model.enums.Rol;
+import io.github.polobernardoscarlos.fichaje.repository.CentroTrabajoRepository;
 import io.github.polobernardoscarlos.fichaje.repository.UsuarioRepository;
 import io.github.polobernardoscarlos.fichaje.service.usuarioService.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CentroTrabajoRepository centroTrabajoRepository;
 
 
     //Creamos un metodo privado para agilizar las validaciones de dni y email
@@ -49,10 +52,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     //De user a UsuarioResponse
     private UsuarioResponse toUsuarioResponse(Usuario usuario) {
         return new UsuarioResponse(usuario.getId(), usuario.getNombre(), usuario.getApellidos(), usuario.getDni(), usuario.getEmail(), usuario.getTelefono(),
-                usuario.getRol(), usuario.isActivo(), usuario.getFechaAlta());
+                usuario.getRol(), usuario.isActivo(), usuario.getFechaAlta(),
+                usuario.getCentroTrabajo() != null ?
+                        usuario.getCentroTrabajo().getId() : null);
     }
 
-    //De UsserReques a User
+    //De UsserRequest a User
     private Usuario toUsuario(UsuarioRequest usuarioRequest) {
         Usuario usuario = new Usuario();
         usuario.setNombre(usuarioRequest.nombre());
@@ -64,8 +69,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setRol(usuarioRequest.rol());
         usuario.setActivo(true);
         usuario.setFechaAlta(LocalDate.now());
+        usuario.setCentroTrabajo(listaCentroTrbajoById(usuarioRequest.centroTrabajo_id()));
         return usuario;
 
+    }
+
+
+    //Metodo para buscar por id del centro de trabajo
+    private CentroTrabajo listaCentroTrbajoById(Long idCentroTrabajo) {
+        if (idCentroTrabajo == null) {
+            return null;
+        }
+        return centroTrabajoRepository.findById(idCentroTrabajo).orElseThrow(() -> new RecursoNoEncontradoException("no existen centroTrabajo con id:" + idCentroTrabajo));
     }
 
     @Transactional
@@ -115,7 +130,38 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
         }
+
+        //CEntro trabajo
+        if (usuario.getCentroTrabajo() != null && usuarioRequest.centroTrabajo_id() != null) {
+            //Si ninguno es null los comparamos
+            if (!usuario.getCentroTrabajo().getId().equals(usuarioRequest.centroTrabajo_id())) {
+
+                //SI no son iguales miramos que exista el centro trabajo nuevo
+                if (!centroTrabajoRepository.existsById(usuarioRequest.centroTrabajo_id())) {
+                    //SI no existe
+                    throw new RecursoNoEncontradoException("No existe un centro de trabajo con el id:" + usuarioRequest.centroTrabajo_id());
+
+                }
+                //SI existe
+                usuario.setCentroTrabajo(centroTrabajoRepository.getReferenceById(usuarioRequest.centroTrabajo_id()));
+            }
+        } else if (usuario.getCentroTrabajo() == null && usuarioRequest.centroTrabajo_id() != null) {
+            //Si el usuario no tenia centro asociado, comprobamos que exista el id del centro
+            if (!centroTrabajoRepository.existsById(usuarioRequest.centroTrabajo_id())) {
+                //SI no existe
+                throw new RecursoNoEncontradoException("No existe un centro de trabajo con el id:" + usuarioRequest.centroTrabajo_id());
+
+            }
+            //SI existe
+            usuario.setCentroTrabajo(centroTrabajoRepository.getReferenceById(usuarioRequest.centroTrabajo_id()));
+
+        } else if (usuarioRequest.centroTrabajo_id() == null) {
+            usuario.setCentroTrabajo(null);
+        }
+
+
         usuario.setRol(usuarioRequest.rol());
+
 
         return toUsuarioResponse(usuarioRepository.save(usuario));
     }

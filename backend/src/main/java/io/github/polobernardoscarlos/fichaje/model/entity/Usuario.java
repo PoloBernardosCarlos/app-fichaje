@@ -23,7 +23,6 @@ public class Usuario {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "centro_trabajo_id")
-
     private CentroTrabajo centroTrabajo;
 
     @Column(nullable = false, length = 50)

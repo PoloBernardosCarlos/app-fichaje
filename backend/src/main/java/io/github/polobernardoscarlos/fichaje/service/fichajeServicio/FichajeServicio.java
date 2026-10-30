@@ -10,7 +10,7 @@ import java.util.List;
 public interface FichajeServicio {
     List<FichajeResponse> listarFichajes();
 
-    List<FichajeResponse> listarFichajeByIncidenciaFechaIntervalo(boolean incidencia, LocalDate inicio, LocalDate fim);
+    List<FichajeResponse> listarFichajeByIncidenciaFechaIntervalo(boolean incidencia, LocalDate inicio, LocalDate fin);
 
     List<FichajeResponse> listarFichajeByOrigenRegistroFechaIntervalo(OrigenRegistro origen, LocalDate inicio, LocalDate fin);
 

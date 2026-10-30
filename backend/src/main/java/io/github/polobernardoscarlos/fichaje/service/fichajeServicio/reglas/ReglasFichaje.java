@@ -76,7 +76,7 @@ public class ReglasFichaje {
 
     }
 
-    public void gestionHorariaTurno(AsignacionTurno asignacion, LocalTime ahora, TipoFichaje tipo, Fichaje fichajeActual) {
+    public void gestionHorariaTurno(AsignacionTurno asignacion, LocalTime ahora, Fichaje fichajeActual) {
         //Recibimos el tipo de fichaje, en funcion de el comprobamos puntualidad para entrar y salir
 
         Turno turno = asignacion.getTurno();
@@ -85,7 +85,8 @@ public class ReglasFichaje {
         LocalTime limiteTiempoSuperior;
         LocalTime limiteTiempoInferior;
 
-        switch (tipo) {
+
+        switch (fichajeActual.getTipo()) {
             case ENTRADA:
 
                 limiteTiempoSuperior = inicioTurno.plusMinutes(turno.getMargenMinutos());//9:15
@@ -109,7 +110,7 @@ public class ReglasFichaje {
                     fichajeActual.setMotivoIncidencia("El usuario ficha salida a las " + ahora.truncatedTo(ChronoUnit.MINUTES) + ". Su jornada termina a las:" + finTurno);
                 } else if (ahora.isAfter(limiteTiempoSuperior)) {
                     fichajeActual.setIncidencia(true);
-                    fichajeActual.setMotivoIncidencia("El usuario ha salido tarde. Ficha salida a las " + ahora.truncatedTo(ChronoUnit.MINUTES)+ ". Su jornada termina a las:" + finTurno);
+                    fichajeActual.setMotivoIncidencia("El usuario ha salido tarde. Ficha salida a las " + ahora.truncatedTo(ChronoUnit.MINUTES) + ". Su jornada termina a las:" + finTurno);
                 }
                 break;
 

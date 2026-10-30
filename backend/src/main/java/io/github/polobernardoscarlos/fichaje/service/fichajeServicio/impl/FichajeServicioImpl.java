@@ -94,6 +94,9 @@ public class FichajeServicioImpl implements FichajeServicio {
     @Override
     @Transactional(readOnly = true)
     public List<FichajeResponse> listarFichajeByIdUsuarioFechaIntervalo(long idUsuario, LocalDate fechaInicio, LocalDate fechaFin) {
+        if (!usuarioRepository.existsById(idUsuario)) {
+            throw new RecursoNoEncontradoException("No se ha encontrado un usuario con el id: " + idUsuario);
+        }
         List<FichajeResponse> listaFichajeResponses = new ArrayList<>();
         List<Fichaje> listaFichajes = fichajeRepository.findByUsuarioIdAndFechaHoraBetween(idUsuario, fechaInicio.atStartOfDay(), fechaFin.atTime(LocalTime.MAX));
         for (Fichaje fichaje : listaFichajes) {
@@ -131,19 +134,25 @@ public class FichajeServicioImpl implements FichajeServicio {
         //Comprobamos si el usuario tiene un turno asignado
         AsignacionTurno asignacionTurno = asignacionTurnoRepository.findByUsuarioIdAndFecha(usuario.getId(), ahora.toLocalDate()).orElseThrow(()
                 -> new ReglaNegocioException("El usuario " + usuario.getId() + " no tiene turno  asignado"));
+        //Comporbamos que el fichaje se haga en el margen temporal contemplado
+        reglas.gestionHorariaTurno(asignacionTurno, ahora.toLocalTime(), fichajeActual);
+        //Si pasa todas las validaciones se ficha
+        fichajeActual.setUsuario(usuario);
+        fichajeActual.setFechaHora(ahora);
+        fichajeActual.setLatitud(fichajeRequest.latitud());
+        fichajeActual.setLongitud(fichajeRequest.longitud());
+        fichajeActual.setOrigen(OrigenRegistro.EMPLEADO);
 
-        return null;
+        return fromFichajeToResponse(fichajeRepository.save(fichajeActual));
     }
-    //Metodos para mapear
-
-    private Fichaje fromRequestToFichaje(FichajeRequest fichajeRequest) {
-
-        return null;
-    }
+    //Metodo para mapear
 
     private FichajeResponse fromFichajeToResponse(Fichaje fichaje) {
+        FichajeResponse response = new FichajeResponse(fichaje.getId(), fichaje.getUsuario().getId(), fichaje.getTipo(), fichaje.getFechaHora(), fichaje.getLatitud()
+        , fichaje.getLongitud(), fichaje.isIncidencia(), fichaje.getMotivoIncidencia(), fichaje.getOrigen());
 
-        return null;
+
+        return response;
     }
 
 

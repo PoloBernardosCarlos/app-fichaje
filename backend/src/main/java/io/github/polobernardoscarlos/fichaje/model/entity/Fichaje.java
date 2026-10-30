@@ -42,7 +42,7 @@ public class Fichaje {
     @Column(nullable = false)
     private boolean incidencia=false;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     private String motivoIncidencia;
 
     @Column(nullable = false,length = 10)

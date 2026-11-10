@@ -147,6 +147,8 @@ Para saber si el usuario está cerca del centro paso el radio de metros a grados
 
 Carlos Polo Bernardos
 
+[LinkedIn](https://www.linkedin.com/in/carlos-polo-bernardos)
+
 ## Licencia
 
 MIT, ver [LICENSE](LICENSE).
